@@ -1,6 +1,7 @@
 package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
+import org.junit.platform.commons.util.StringUtils;
 
 import java.util.List;
 
@@ -12,8 +13,7 @@ public class InputView {
     public static int readDate() {
         System.out.println(ASK_VISIT_DATE.getMessage());
         String input = Console.readLine();
-        int date = convertDateStringToInt(input);
-        return date;
+        return convertDateStringToInt(input);
     }
 
     public static List<String> readMenus() {
@@ -24,6 +24,9 @@ public class InputView {
 
     private static List<String> splitInput(String input, String regex) {
         List<String> stringMenulist = List.of(input.split(regex));
+        if(stringMenulist.isEmpty()) {
+            throw new IllegalArgumentException(ERROR_INVALID_MENU.getInputErrorMessage());
+        }
         return stringMenulist;
     }
 
