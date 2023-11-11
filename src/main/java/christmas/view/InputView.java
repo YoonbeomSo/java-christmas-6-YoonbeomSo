@@ -2,45 +2,36 @@ package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
 
-import java.time.DateTimeException;
-import java.time.LocalDate;
+import java.util.List;
 
 import static christmas.common.MessageType.*;
 import static christmas.common.ErrorMessageType.*;
-import static christmas.model.type.EventDateType.*;
 
 public class InputView {
 
     public static int readDate() {
-        try {
-            System.out.println(ASK_VISIT_DATE.getMessage());
-            String input = Console.readLine();
-            int date = convertStringToInt(input);
-            validateEventDate(date);
-            return date;
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return readDate();
-        }
+        System.out.println(ASK_VISIT_DATE.getMessage());
+        String input = Console.readLine();
+        int date = convertStringToInt(input);
+        return date;
     }
 
-    public static void readMenu() {
+    public static List<String> readMenus() {
+        System.out.println(ASK_MENU_AND_COUNT.getMessage());
+        String input = Console.readLine();
+        return splitInput(input, ",");
+    }
 
+    private static List<String> splitInput(String input, String regex) {
+        List<String> stringMenulist = List.of(input.split(regex));
+        return stringMenulist;
     }
 
     private static int convertStringToInt(String target) {
         try {
             return Integer.parseInt(target);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(ERROR_NOT_NUMBER.getMessage());
-        }
-    }
-
-    private static void validateEventDate(int date) {
-        try {
-            LocalDate.of(EVENT_YEAR.getValue(), EVENT_MONTH.getValue(), date);
-        } catch (DateTimeException e) {
-            throw new IllegalArgumentException(ERROR_INVALID_DATE.getMessage());
+            throw new IllegalArgumentException(ERROR_INVALID_DATE.getInputErrorMessage());
         }
     }
 }

@@ -1,35 +1,59 @@
 package christmas.service;
 
-import christmas.model.Menu;
-import christmas.model.Order;
+import christmas.model.OrderMenu;
+import christmas.model.Orders;
+import christmas.model.type.Menu;
 import christmas.view.InputView;
 import christmas.view.OutputView;
+
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import static christmas.common.ErrorMessageType.ERROR_INVALID_DATE;
+import static christmas.model.type.EventDate.EVENT_MONTH;
+import static christmas.model.type.EventDate.EVENT_YEAR;
 
 public class ChristmasService {
 
     public void eventStart() {
+        printHello();
         int date = getDate();
-        Menu menu = getMenu();
+        Orders orders = getOrders(date);
 
-        printMenus(menu);
-        printOriginalAmount(menu);
+        printMenus(null);
+        printOriginalAmount(null);
 
-        Order order = new Order(menu, date);
-        printFreeMenus(order);
-        printDiscountList(order);
-        printTotalDiscount(order);
-        printTotalAmount(order);
-        printEventBadge(order);
+        printFreeMenus(null);
+        printDiscountList(null);
+        printTotalDiscount(null);
+        printTotalAmount(null);
+        printEventBadge(null);
+    }
+
+    private static void printHello() {
+        OutputView.printHello();
     }
 
     private int getDate() {
-        OutputView.printHello();
-        return InputView.readDate();
+        try {
+            int date = InputView.readDate();
+            validateEventDate(date);
+            return date;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return getDate();
+        }
     }
 
-    private Menu getMenu() {
-        InputView.readMenu();
-        return null;
+    private Orders getOrders(int date) {
+        try {
+            return buildOrders(InputView.readMenus(),date);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return getOrders(date);
+        }
     }
 
     private void printMenus(Menu menu) {
@@ -40,26 +64,39 @@ public class ChristmasService {
         OutputView.printOriginalAmount();
     }
 
-    private void printFreeMenus(Order order) {
+    private void printFreeMenus(Orders orders) {
         OutputView.printFreeMenu();
     }
 
-    private void printDiscountList(Order order) {
+    private void printDiscountList(Orders orders) {
         OutputView.printDiscountList();
     }
 
-    private void printTotalDiscount(Order order) {
+    private void printTotalDiscount(Orders orders) {
         OutputView.printTotalDiscount();
     }
 
-    private void printTotalAmount(Order order) {
+    private void printTotalAmount(Orders orders) {
         OutputView.printTotalAmount();
     }
 
-    private void printEventBadge(Order order) {
+    private void printEventBadge(Orders orders) {
         OutputView.printEventBadge();
     }
 
+    private static void validateEventDate(int date) {
+        try {
+            LocalDate.of(EVENT_YEAR.getValue(), EVENT_MONTH.getValue(), date);
+        } catch (DateTimeException e) {
+            throw new IllegalArgumentException(ERROR_INVALID_DATE.getInputErrorMessage());
+        }
+    }
+
+    private static Orders buildOrders(List<String> menuList, int date) {
+        List<OrderMenu> orderMenuList = new ArrayList<>();
+        menuList.forEach(m -> orderMenuList.add(new OrderMenu(m)));
+        return new Orders(orderMenuList, date);
+    }
 
 
 }

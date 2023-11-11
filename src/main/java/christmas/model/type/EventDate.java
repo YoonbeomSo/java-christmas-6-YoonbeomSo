@@ -1,13 +1,13 @@
 package christmas.model.type;
 
-public enum EventDateType {
+public enum EventDate {
     EVENT_YEAR(2023),
     EVENT_MONTH(12),
     ;
 
     private final int value;
 
-    EventDateType(int value) {
+    EventDate(int value) {
         this.value = value;
     }
 
