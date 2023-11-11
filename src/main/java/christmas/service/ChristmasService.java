@@ -8,13 +8,13 @@ import christmas.view.OutputView;
 public class ChristmasService {
 
     public void eventStart() {
-        int day = getDay();
+        int date = getDate();
         Menu menu = getMenu();
 
         printMenus(menu);
         printOriginalAmount(menu);
 
-        Order order = new Order(menu, day);
+        Order order = new Order(menu, date);
         printFreeMenus(order);
         printDiscountList(order);
         printTotalDiscount(order);
@@ -22,10 +22,9 @@ public class ChristmasService {
         printEventBadge(order);
     }
 
-    private int getDay() {
+    private int getDate() {
         OutputView.printHello();
-        InputView.readDate();
-        return 0;
+        return InputView.readDate();
     }
 
     private Menu getMenu() {
