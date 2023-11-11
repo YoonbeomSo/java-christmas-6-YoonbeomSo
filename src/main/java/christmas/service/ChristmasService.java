@@ -19,7 +19,7 @@ public class ChristmasService {
 
     public void eventStart() {
         printHello();
-        int date = getDate();
+        LocalDate date = getDate();
         Orders orders = getOrders(date);
 
         printMenus(null);
@@ -36,18 +36,16 @@ public class ChristmasService {
         OutputView.printHello();
     }
 
-    private int getDate() {
+    private LocalDate getDate() {
         try {
-            int date = InputView.readDate();
-            validateEventDate(date);
-            return date;
+            return getLocalDate(InputView.readDate());
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return getDate();
         }
     }
 
-    private Orders getOrders(int date) {
+    private Orders getOrders(LocalDate date) {
         try {
             return buildOrders(InputView.readMenus(),date);
         } catch (IllegalArgumentException e) {
@@ -84,15 +82,15 @@ public class ChristmasService {
         OutputView.printEventBadge();
     }
 
-    private static void validateEventDate(int date) {
+    private static LocalDate getLocalDate(int date) {
         try {
-            LocalDate.of(EVENT_YEAR.getValue(), EVENT_MONTH.getValue(), date);
+            return LocalDate.of(EVENT_YEAR.getValue(), EVENT_MONTH.getValue(), date);
         } catch (DateTimeException e) {
             throw new IllegalArgumentException(ERROR_INVALID_DATE.getInputErrorMessage());
         }
     }
 
-    private static Orders buildOrders(List<String> menuList, int date) {
+    private static Orders buildOrders(List<String> menuList, LocalDate date) {
         List<OrderMenu> orderMenuList = new ArrayList<>();
         menuList.forEach(m -> orderMenuList.add(new OrderMenu(m)));
         return new Orders(orderMenuList, date);

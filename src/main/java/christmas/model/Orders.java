@@ -2,6 +2,7 @@ package christmas.model;
 
 import christmas.model.type.Menu;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,9 +14,9 @@ public class Orders {
     private static final int MAX_ORDER_COUNT = 20;
 
     private final List<OrderMenu> orderMenuList = new ArrayList<>();
-    private final int date;
+    private final LocalDate date;
 
-    public Orders(List<OrderMenu> orderMenuList, int date) {
+    public Orders(List<OrderMenu> orderMenuList, LocalDate date) {
         validateDuplicate(orderMenuList);
         validateUserCaution(orderMenuList);
         this.orderMenuList.addAll(orderMenuList);

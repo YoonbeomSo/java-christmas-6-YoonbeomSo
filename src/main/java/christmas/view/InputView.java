@@ -12,7 +12,7 @@ public class InputView {
     public static int readDate() {
         System.out.println(ASK_VISIT_DATE.getMessage());
         String input = Console.readLine();
-        int date = convertStringToInt(input);
+        int date = convertDateStringToInt(input);
         return date;
     }
 
@@ -27,7 +27,7 @@ public class InputView {
         return stringMenulist;
     }
 
-    private static int convertStringToInt(String target) {
+    private static int convertDateStringToInt(String target) {
         try {
             return Integer.parseInt(target);
         } catch (NumberFormatException e) {
