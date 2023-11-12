@@ -15,6 +15,7 @@ public class Orders {
 
     private final List<OrderMenu> orderMenuList = new ArrayList<>();
     private final LocalDate date;
+    private final int totalAmount;
     private int benefitAmount;
 
     public Orders(List<OrderMenu> orderMenuList, LocalDate date) {
@@ -22,6 +23,7 @@ public class Orders {
         validateUserCaution(orderMenuList);
         this.orderMenuList.addAll(orderMenuList);
         this.date = date;
+        this.totalAmount = calculatorTotalAmount(orderMenuList);
     }
 
     public List<String> getOrderList() {
@@ -32,9 +34,7 @@ public class Orders {
     }
 
     public int getTotalAmount() {
-        return orderMenuList.stream()
-                .mapToInt(om -> om.getMenu().getPrice() * om.getCount())
-                .sum();
+        return this.totalAmount;
     }
 
     public LocalDate getDate() {
@@ -43,6 +43,20 @@ public class Orders {
 
     public List<OrderMenu> getOrderMenuList() {
         return orderMenuList;
+    }
+
+    public int getBenefitAmount() {
+        return benefitAmount;
+    }
+
+    public int getResultAmount() {
+        return totalAmount - benefitAmount;
+    }
+
+    public void setBenefitAmount(List<Event> events) {
+        this.benefitAmount = events.stream()
+                .mapToInt(e -> e.getBenefitAmount(this))
+                .sum();
     }
 
     private void validateDuplicate(List<OrderMenu> orderMenuList) {
@@ -76,5 +90,11 @@ public class Orders {
         if (countSum > MAX_ORDER_COUNT) {
             throw new IllegalArgumentException(ERROR_OVER_MAX_ORDER_SIZE.getInputErrorMessage());
         }
+    }
+
+    private int calculatorTotalAmount(List<OrderMenu> orderMenuList) {
+        return orderMenuList.stream()
+                .mapToInt(om -> om.getMenu().getPrice() * om.getCount())
+                .sum();
     }
 }

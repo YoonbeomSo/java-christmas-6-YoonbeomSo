@@ -55,7 +55,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printTotalDiscount(int totalBenefit) {
+    public static void printTotalBenefit(int totalBenefit) {
         System.out.println(TOTAL_BENEFIT_TITLE.getMessage());
         if (totalBenefit != 0) {
             totalBenefit *= -1 ;
@@ -64,7 +64,10 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printTotalAmount() {
+    public static void printResultAmount(int resultAmount) {
+        System.out.println(RESULT_AMOUNT_TITLE.getMessage());
+        System.out.println(getAmountMessage(resultAmount));
+        System.out.println();
     }
 
     public static void printEventBadge() {

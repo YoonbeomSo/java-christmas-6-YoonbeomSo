@@ -32,7 +32,7 @@ public class ChristmasService {
         printGift(getGift(events), orders);
         printBenefitList(events, orders);
         printTotalBenefit(events, orders);
-        printTotalAmount(null);
+        printResultAmount(orders);
         printEventBadge(null);
     }
 
@@ -104,8 +104,8 @@ public class ChristmasService {
         OutputView.printBenefitList(benefitMap);
     }
 
-    private Map<Event, Integer> getBenefitMap(List<Event> eventList, Orders orders) {
-        return eventList.stream()
+    private Map<Event, Integer> getBenefitMap(List<Event> events, Orders orders) {
+        return events.stream()
                 .sorted(Comparator.comparingInt((Event e) -> e.getBenefitAmount(orders)).reversed())
                 .collect(Collectors.toMap(
                         e -> e,
@@ -115,14 +115,13 @@ public class ChristmasService {
     }
 
     private void printTotalBenefit(List<Event> events, Orders orders) {
-        int totalBenefit = events.stream()
-                .mapToInt(e -> e.getBenefitAmount(orders))
-                .sum();
-        OutputView.printTotalDiscount(totalBenefit);
+        orders.setBenefitAmount(events);
+        OutputView.printTotalBenefit(orders.getBenefitAmount());
     }
 
-    private void printTotalAmount(Orders orders) {
-        OutputView.printTotalAmount();
+    private void printResultAmount(Orders orders) {
+        int resultAmount = orders.getResultAmount();
+        OutputView.printResultAmount(resultAmount);
     }
 
     private void printEventBadge(Orders orders) {
