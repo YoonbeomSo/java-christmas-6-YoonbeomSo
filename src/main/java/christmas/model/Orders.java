@@ -59,7 +59,7 @@ public class Orders {
 
     public List<String> getOrderList() {
         return orderMenuList.stream()
-                .sorted(Comparator.comparingInt(OrderMenu::getCount).reversed())
+                .sorted(Comparator.comparingInt(om -> om.getMenu().getMenuType().getSort()))
                 .map(om -> getMenuMessage(om.getMenu().getName(), om.getCount()))
                 .collect(Collectors.toList());
     }

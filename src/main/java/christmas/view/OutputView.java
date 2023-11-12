@@ -1,6 +1,5 @@
 package christmas.view;
 
-import christmas.common.MessageType;
 import christmas.model.Orders;
 
 import java.time.LocalDate;
@@ -19,8 +18,8 @@ public class OutputView {
     }
 
     public static void printMenu(Orders orders) {
-        List<String> orderList = orders.getOrderList();
         System.out.println(MENU_TITLE.getMessage());
+        List<String> orderList = orders.getOrderList();
         orderList.forEach(o -> System.out.println(o));
         System.out.println();
     }

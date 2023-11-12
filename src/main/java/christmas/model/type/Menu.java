@@ -45,4 +45,8 @@ public enum Menu {
     public String getName() {
         return name;
     }
+
+    public MenuType getMenuType() {
+        return menuType;
+    }
 }
