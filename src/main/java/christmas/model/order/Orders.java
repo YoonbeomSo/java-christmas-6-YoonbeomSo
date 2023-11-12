@@ -15,6 +15,7 @@ public class Orders {
 
     private final List<OrderMenu> orderMenuList = new ArrayList<>();
     private final LocalDate date;
+    private int benefitAmount;
 
     public Orders(List<OrderMenu> orderMenuList, LocalDate date) {
         validateDuplicate(orderMenuList);

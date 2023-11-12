@@ -31,7 +31,7 @@ public class ChristmasService {
 
         printGift(getGift(events), orders);
         printBenefitList(events, orders);
-        printTotalDiscount(null);
+        printTotalBenefit(events, orders);
         printTotalAmount(null);
         printEventBadge(null);
     }
@@ -114,8 +114,11 @@ public class ChristmasService {
                         LinkedHashMap::new));
     }
 
-    private void printTotalDiscount(Orders orders) {
-        OutputView.printTotalDiscount();
+    private void printTotalBenefit(List<Event> events, Orders orders) {
+        int totalBenefit = events.stream()
+                .mapToInt(e -> e.getBenefitAmount(orders))
+                .sum();
+        OutputView.printTotalDiscount(totalBenefit);
     }
 
     private void printTotalAmount(Orders orders) {

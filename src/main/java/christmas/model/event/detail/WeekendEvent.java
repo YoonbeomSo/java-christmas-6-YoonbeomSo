@@ -7,7 +7,6 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
-import static christmas.model.order.MenuType.DESSERT;
 import static christmas.model.order.MenuType.MAIN;
 import static java.time.DayOfWeek.FRIDAY;
 import static java.time.DayOfWeek.SATURDAY;

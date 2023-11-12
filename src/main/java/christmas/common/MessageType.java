@@ -15,6 +15,7 @@ public enum MessageType {
     GIFT_TITLE("<증정 메뉴>"),
     BENEFIT_TITLE("<혜택 내역>"),
     BENEFIT_FORMAT("%s: -%,d원"),
+    TOTAL_BENEFIT_TITLE("<총혜택 금액>"),
     EMPTY("없음"),
     ;
 
