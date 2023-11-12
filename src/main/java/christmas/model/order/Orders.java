@@ -1,9 +1,9 @@
 package christmas.model.order;
 
+import christmas.model.event.Event;
+
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static christmas.common.ErrorMessageType.*;
@@ -38,6 +38,10 @@ public class Orders {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    public List<OrderMenu> getOrderMenuList() {
+        return orderMenuList;
     }
 
     private void validateDuplicate(List<OrderMenu> orderMenuList) {

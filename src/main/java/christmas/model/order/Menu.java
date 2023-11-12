@@ -53,4 +53,12 @@ public enum Menu {
     public MenuType getMenuType() {
         return menuType;
     }
+
+    public boolean isDessert(MenuType menuType) {
+        return this.menuType.equals(menuType);
+    }
+
+    public boolean isMain(MenuType menuType) {
+        return this.menuType.equals(menuType);
+    }
 }

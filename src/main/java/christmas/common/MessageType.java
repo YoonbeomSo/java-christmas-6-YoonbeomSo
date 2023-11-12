@@ -13,6 +13,8 @@ public enum MessageType {
     TOTAL_AMOUNT_TITLE("<할인 전 총주문 금액>"),
     AMOUNT_FORMAT("%,d원"),
     GIFT_TITLE("<증정 메뉴>"),
+    BENEFIT_TITLE("<혜택 내역>"),
+    BENEFIT_FORMAT("%s: -%,d원"),
     EMPTY("없음"),
     ;
 
@@ -36,6 +38,10 @@ public enum MessageType {
 
     public static String getAmountMessage(int amount) {
         return String.format(AMOUNT_FORMAT.message, amount);
+    }
+
+    public static String getBenefitMessage(String name, int amount) {
+        return String.format(BENEFIT_FORMAT.message, name, amount);
     }
 
 }

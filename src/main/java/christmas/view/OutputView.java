@@ -1,5 +1,6 @@
 package christmas.view;
 
+import christmas.model.event.Event;
 import christmas.model.order.Orders;
 import christmas.model.order.Menu;
 
@@ -43,7 +44,15 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printDiscountList() {
+    public static void printBenefitList(Map<Event, Integer> benefitMap) {
+        System.out.println(BENEFIT_TITLE.getMessage());
+        if (benefitMap.isEmpty()) {
+            System.out.println(EMPTY.getMessage());
+        }
+        benefitMap.entrySet().forEach(
+                b -> System.out.println(getBenefitMessage(b.getKey().getName(), b.getValue()))
+        );
+        System.out.println();
     }
 
     public static void printTotalDiscount() {

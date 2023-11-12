@@ -11,9 +11,8 @@ import christmas.view.OutputView;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static christmas.common.ErrorMessageType.ERROR_INVALID_DATE;
 import static christmas.model.event.EventDate.EVENT_MONTH;
@@ -22,25 +21,25 @@ import static christmas.model.event.EventDate.EVENT_YEAR;
 public class ChristmasService {
 
     public void eventStart() {
-        printHello();
-        LocalDate date = getDate();
-        Orders orders = getOrders(date);
-        printBefitForeword(date);
+        Orders orders = reservation();
 
+        printBefitForeword(orders.getDate());
         printMenus(orders);
         printOriginalAmount(orders);
 
-        List<Event> events = getActiveEvent();
+        List<Event> events = getValidEventList(orders);
 
         printGift(getGift(events), orders);
-        printDiscountList(null);
+        printBenefitList(events, orders);
         printTotalDiscount(null);
         printTotalAmount(null);
         printEventBadge(null);
     }
 
-    private List<Event> getActiveEvent() {
-        return ActiveEvent.findAllActiveEvent();
+    private Orders reservation() {
+        printHello();
+        LocalDate date = getDate();
+        return getOrders(date);
     }
 
     private static void printHello() {
@@ -78,6 +77,12 @@ public class ChristmasService {
         OutputView.printOriginalAmount(totalAmount);
     }
 
+    private List<Event> getValidEventList(Orders orders) {
+        return ActiveEvent.findAllActiveEvent().stream()
+                .filter(e -> e.isValidEvent(orders))
+                .collect(Collectors.toList());
+    }
+
     private GiftEvent getGift(List<Event> events) {
         return events.stream()
                 .filter(e -> e instanceof GiftEvent)
@@ -87,12 +92,26 @@ public class ChristmasService {
     }
 
     private void printGift(GiftEvent event, Orders orders) {
-        Map<Menu, Integer> giftMap = event.getGiftMap(orders.getTotalAmount(), orders.getDate());
+        Map<Menu, Integer> giftMap = new HashMap<>();
+        if (event != null) {
+            giftMap = event.getGiftMap(orders.getTotalAmount(), orders.getDate());
+        }
         OutputView.printFreeMenu(giftMap);
     }
 
-    private void printDiscountList(Orders orders) {
-        OutputView.printDiscountList();
+    private void printBenefitList(List<Event> events, Orders orders) {
+        Map<Event, Integer> benefitMap = getBenefitMap(events, orders);
+        OutputView.printBenefitList(benefitMap);
+    }
+
+    private Map<Event, Integer> getBenefitMap(List<Event> eventList, Orders orders) {
+        return eventList.stream()
+                .sorted(Comparator.comparingInt((Event e) -> e.getBenefitAmount(orders)).reversed())
+                .collect(Collectors.toMap(
+                        e -> e,
+                        e -> e.getBenefitAmount(orders),
+                        (existing, replacement) -> existing,
+                        LinkedHashMap::new));
     }
 
     private void printTotalDiscount(Orders orders) {
