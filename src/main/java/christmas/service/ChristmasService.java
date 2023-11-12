@@ -30,7 +30,7 @@ public class ChristmasService {
 
         List<Event> events = getValidEventList(orders);
 
-        printGift(getGift(events), orders);
+        printGift(events, orders);
         printBenefitList(events, orders);
         printTotalBenefit(events, orders);
         printResultAmount(orders);
@@ -92,10 +92,12 @@ public class ChristmasService {
                 .orElse(null);
     }
 
-    private void printGift(GiftEvent event, Orders orders) {
+    private void printGift(List<Event> events, Orders orders) {
+        GiftEvent giftEvent = getGift(events);
         Map<Menu, Integer> giftMap = new HashMap<>();
-        if (event != null) {
-            giftMap = event.getGiftMap(orders.getTotalAmount(), orders.getDate());
+        if (giftEvent != null) {
+            giftMap = giftEvent.getGiftMap(orders.getTotalAmount(), orders.getDate());
+            orders.setGiftBenefitAmount(giftEvent.getBenefitAmount(orders));
         }
         OutputView.printFreeMenu(giftMap);
     }
@@ -107,7 +109,7 @@ public class ChristmasService {
 
     private Map<Event, Integer> getBenefitMap(List<Event> events, Orders orders) {
         return events.stream()
-                .sorted(Comparator.comparingInt((Event e) -> e.getBenefitAmount(orders)))
+                .sorted(Comparator.comparingInt((Event e) -> e.getBenefitAmount(orders)).reversed())
                 .filter(e -> e.getBenefitAmount(orders) != 0)
                 .collect(Collectors.toMap(
                         e -> e,

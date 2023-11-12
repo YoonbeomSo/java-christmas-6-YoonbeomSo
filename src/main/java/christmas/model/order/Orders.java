@@ -18,6 +18,7 @@ public class Orders {
     private final LocalDate date;
     private final int totalAmount;
     private int benefitAmount;
+    private int giftBenefitAmount;
 
     public Orders(List<OrderMenu> orderMenuList, LocalDate date) {
         validateDuplicate(orderMenuList);
@@ -51,7 +52,15 @@ public class Orders {
     }
 
     public int getResultAmount() {
-        return totalAmount - benefitAmount;
+        return totalAmount - (benefitAmount - giftBenefitAmount);
+    }
+
+    public EventBadge getBadge() {
+        return EventBadge.findByAmount(benefitAmount);
+    }
+
+    public void setGiftBenefitAmount(Integer amount) {
+        this.giftBenefitAmount = amount;
     }
 
     public void setBenefitAmount(List<Event> events) {
@@ -99,7 +108,4 @@ public class Orders {
                 .sum();
     }
 
-    public EventBadge getBadge() {
-        return EventBadge.findByAmount(benefitAmount);
-    }
 }
