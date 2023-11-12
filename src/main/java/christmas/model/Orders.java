@@ -25,8 +25,22 @@ public class Orders {
         this.date = date;
     }
 
+    public List<String> getOrderList() {
+        return orderMenuList.stream()
+                .sorted(Comparator.comparingInt(om -> om.getMenu().getMenuType().getSort()))
+                .map(om -> getMenuMessage(om.getMenu().getName(), om.getCount()))
+                .collect(Collectors.toList());
+    }
+
+    public int getTotalAmount() {
+        return orderMenuList.stream()
+                .mapToInt(om -> om.getMenu().getPrice() * om.getCount())
+                .sum();
+    }
+
     private void validateDuplicate(List<OrderMenu> orderMenuList) {
-        List<OrderMenu> distinctList = orderMenuList.stream()
+        List<Menu> distinctList = orderMenuList.stream()
+                .map(om -> om.getMenu())
                 .distinct()
                 .collect(Collectors.toList());
         if (distinctList.size() != orderMenuList.size()) {
@@ -55,18 +69,5 @@ public class Orders {
         if (countSum > MAX_ORDER_COUNT) {
             throw new IllegalArgumentException(ERROR_OVER_MAX_ORDER_SIZE.getInputErrorMessage());
         }
-    }
-
-    public List<String> getOrderList() {
-        return orderMenuList.stream()
-                .sorted(Comparator.comparingInt(om -> om.getMenu().getMenuType().getSort()))
-                .map(om -> getMenuMessage(om.getMenu().getName(), om.getCount()))
-                .collect(Collectors.toList());
-    }
-
-    public int getTotalAmount() {
-        return orderMenuList.stream()
-                .mapToInt(om -> om.getMenu().getPrice() * om.getCount())
-                .sum();
     }
 }
