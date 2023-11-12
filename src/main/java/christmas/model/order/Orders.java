@@ -1,6 +1,4 @@
-package christmas.model;
-
-import christmas.model.type.Menu;
+package christmas.model.order;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

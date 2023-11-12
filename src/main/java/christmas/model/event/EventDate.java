@@ -1,4 +1,4 @@
-package christmas.model.type;
+package christmas.model.event;
 
 public enum EventDate {
     EVENT_YEAR(2023),

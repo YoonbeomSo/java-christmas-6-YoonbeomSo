@@ -1,6 +1,4 @@
-package christmas.model;
-
-import christmas.model.type.Menu;
+package christmas.model.order;
 
 import static christmas.common.ErrorMessageType.*;
 
@@ -14,6 +12,14 @@ public class OrderMenu {
         validateSplit(split);
         this.menu = convertMenu(split[0].trim());
         this.count = convertCount(split[1].trim());
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public int getCount() {
+        return count;
     }
 
     private void validateSplit(String[] split) {
@@ -41,13 +47,5 @@ public class OrderMenu {
         if (count < 1) {
             throw new IllegalArgumentException(ERROR_INVALID_MENU.getInputErrorMessage());
         }
-    }
-
-    public Menu getMenu() {
-        return menu;
-    }
-
-    public int getCount() {
-        return count;
     }
 }

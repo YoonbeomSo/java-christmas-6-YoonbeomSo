@@ -1,9 +1,11 @@
 package christmas.view;
 
-import christmas.model.Orders;
+import christmas.model.order.Orders;
+import christmas.model.order.Menu;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import static christmas.common.MessageType.*;
 
@@ -30,7 +32,15 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printFreeMenu() {
+    public static void printFreeMenu(Map<Menu, Integer> giftMap) {
+        System.out.println(GIFT_TITLE.getMessage());
+        if (giftMap.isEmpty()) {
+            System.out.println(EMPTY.getMessage());
+        }
+        giftMap.entrySet().forEach(
+                g -> System.out.println(getMenuMessage(g.getKey().getName() ,g.getValue()))
+        );
+        System.out.println();
     }
 
     public static void printDiscountList() {

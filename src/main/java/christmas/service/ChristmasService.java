@@ -1,7 +1,11 @@
 package christmas.service;
 
-import christmas.model.OrderMenu;
-import christmas.model.Orders;
+import christmas.model.event.Event;
+import christmas.model.order.OrderMenu;
+import christmas.model.order.Orders;
+import christmas.model.event.ActiveEvent;
+import christmas.model.event.detail.GiftEvent;
+import christmas.model.order.Menu;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -9,10 +13,11 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static christmas.common.ErrorMessageType.ERROR_INVALID_DATE;
-import static christmas.model.type.EventDate.EVENT_MONTH;
-import static christmas.model.type.EventDate.EVENT_YEAR;
+import static christmas.model.event.EventDate.EVENT_MONTH;
+import static christmas.model.event.EventDate.EVENT_YEAR;
 
 public class ChristmasService {
 
@@ -25,11 +30,17 @@ public class ChristmasService {
         printMenus(orders);
         printOriginalAmount(orders);
 
-        printFreeMenus(null);
+        List<Event> events = getActiveEvent();
+
+        printGift(getGift(events), orders.getTotalAmount());
         printDiscountList(null);
         printTotalDiscount(null);
         printTotalAmount(null);
         printEventBadge(null);
+    }
+
+    private List<Event> getActiveEvent() {
+        return ActiveEvent.findAllActiveEvent();
     }
 
     private static void printHello() {
@@ -47,7 +58,7 @@ public class ChristmasService {
 
     private Orders getOrders(LocalDate date) {
         try {
-            return buildOrders(InputView.readMenus(),date);
+            return buildOrders(InputView.readMenus(), date);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return getOrders(date);
@@ -67,8 +78,17 @@ public class ChristmasService {
         OutputView.printOriginalAmount(totalAmount);
     }
 
-    private void printFreeMenus(Orders orders) {
-        OutputView.printFreeMenu();
+    private GiftEvent getGift(List<Event> events) {
+        return events.stream()
+                .filter(e -> e instanceof GiftEvent)
+                .map(e -> (GiftEvent) e)
+                .findFirst()
+                .orElse(null);
+    }
+
+    private void printGift(GiftEvent event, int totalAmount) {
+        Map<Menu, Integer> giftMap = event.getGiftMap(totalAmount);
+        OutputView.printFreeMenu(giftMap);
     }
 
     private void printDiscountList(Orders orders) {

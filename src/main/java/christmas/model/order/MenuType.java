@@ -1,4 +1,4 @@
-package christmas.model.type;
+package christmas.model.order;
 
 public enum MenuType {
     APPETIZER(1),

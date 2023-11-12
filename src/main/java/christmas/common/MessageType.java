@@ -11,7 +11,9 @@ public enum MessageType {
     MENU_TITLE("<주문 메뉴>"),
     MENU_FORMAT("%s %d개"),
     TOTAL_AMOUNT_TITLE("<할인 전 총주문 금액>"),
-    AMOUNT_FORMAT("%,d원")
+    AMOUNT_FORMAT("%,d원"),
+    GIFT_TITLE("<증정 메뉴>"),
+    EMPTY("없음"),
     ;
 
     private final String message;
