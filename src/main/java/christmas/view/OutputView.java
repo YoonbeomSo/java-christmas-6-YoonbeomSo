@@ -1,6 +1,7 @@
 package christmas.view;
 
 import christmas.model.event.Event;
+import christmas.model.event.EventBadge;
 import christmas.model.order.Orders;
 import christmas.model.order.Menu;
 
@@ -70,7 +71,13 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printEventBadge() {
+    public static void printEventBadge(EventBadge eventBadge) {
+        System.out.println(EVENT_BADGE_TITLE.getMessage());
+        if (eventBadge == null) {
+            System.out.println(EMPTY.getMessage());
+            return;
+        }
+        System.out.println(eventBadge.getName());
     }
 
 }

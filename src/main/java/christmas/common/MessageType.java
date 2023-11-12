@@ -17,6 +17,7 @@ public enum MessageType {
     BENEFIT_FORMAT("%s: %,d원"),
     TOTAL_BENEFIT_TITLE("<총혜택 금액>"),
     RESULT_AMOUNT_TITLE("<할인 후 예상 결제 금액>"),
+    EVENT_BADGE_TITLE("<12월 이벤트 배지>"),
     EMPTY("없음"),
     ;
 

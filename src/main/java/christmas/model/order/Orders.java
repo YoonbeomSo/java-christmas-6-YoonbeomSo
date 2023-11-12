@@ -1,6 +1,7 @@
 package christmas.model.order;
 
 import christmas.model.event.Event;
+import christmas.model.event.EventBadge;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -96,5 +97,9 @@ public class Orders {
         return orderMenuList.stream()
                 .mapToInt(om -> om.getMenu().getPrice() * om.getCount())
                 .sum();
+    }
+
+    public EventBadge getBadge() {
+        return EventBadge.findByAmount(benefitAmount);
     }
 }

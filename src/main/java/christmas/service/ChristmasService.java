@@ -1,6 +1,7 @@
 package christmas.service;
 
 import christmas.model.event.Event;
+import christmas.model.event.EventBadge;
 import christmas.model.order.OrderMenu;
 import christmas.model.order.Orders;
 import christmas.model.event.ActiveEvent;
@@ -33,7 +34,7 @@ public class ChristmasService {
         printBenefitList(events, orders);
         printTotalBenefit(events, orders);
         printResultAmount(orders);
-        printEventBadge(null);
+        printEventBadge(orders);
     }
 
     private Orders reservation() {
@@ -126,7 +127,8 @@ public class ChristmasService {
     }
 
     private void printEventBadge(Orders orders) {
-        OutputView.printEventBadge();
+        EventBadge eventBadge = orders.getBadge();
+        OutputView.printEventBadge(eventBadge);
     }
 
     private static LocalDate getLocalDate(int date) {
