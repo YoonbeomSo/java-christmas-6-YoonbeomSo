@@ -2,7 +2,6 @@ package christmas.service;
 
 import christmas.model.OrderMenu;
 import christmas.model.Orders;
-import christmas.model.type.Menu;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
@@ -24,7 +23,7 @@ public class ChristmasService {
         printBefitForeword(date);
 
         printMenus(orders);
-        printOriginalAmount(null);
+        printOriginalAmount(orders);
 
         printFreeMenus(null);
         printDiscountList(null);
@@ -63,8 +62,9 @@ public class ChristmasService {
         OutputView.printMenu(orders);
     }
 
-    private void printOriginalAmount(Menu menu) {
-        OutputView.printOriginalAmount();
+    private void printOriginalAmount(Orders orders) {
+        int totalAmount = orders.getTotalAmount();
+        OutputView.printOriginalAmount(totalAmount);
     }
 
     private void printFreeMenus(Orders orders) {

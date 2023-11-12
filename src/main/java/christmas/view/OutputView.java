@@ -24,7 +24,10 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printOriginalAmount() {
+    public static void printOriginalAmount(int totalAmount) {
+        System.out.println(TOTAL_AMOUNT_TITLE.getMessage());
+        System.out.println(getAmountMessage(totalAmount));
+        System.out.println();
     }
 
     public static void printFreeMenu() {

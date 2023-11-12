@@ -64,4 +64,9 @@ public class Orders {
                 .collect(Collectors.toList());
     }
 
+    public int getTotalAmount() {
+        return orderMenuList.stream()
+                .mapToInt(om -> om.getMenu().getPrice() * om.getCount())
+                .sum();
+    }
 }
