@@ -21,6 +21,7 @@ public class ChristmasService {
         printHello();
         LocalDate date = getDate();
         Orders orders = getOrders(date);
+        printBefitForeword(date);
 
         printMenus(orders);
         printOriginalAmount(null);
@@ -52,6 +53,10 @@ public class ChristmasService {
             System.out.println(e.getMessage());
             return getOrders(date);
         }
+    }
+
+    private void printBefitForeword(LocalDate date) {
+        OutputView.printBefitForeword(date);
     }
 
     private void printMenus(Orders orders) {
@@ -95,6 +100,4 @@ public class ChristmasService {
         menuList.forEach(m -> orderMenuList.add(new OrderMenu(m)));
         return new Orders(orderMenuList, date);
     }
-
-
 }
