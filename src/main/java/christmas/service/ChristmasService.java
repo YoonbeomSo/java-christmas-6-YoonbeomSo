@@ -32,7 +32,7 @@ public class ChristmasService {
 
         List<Event> events = getActiveEvent();
 
-        printGift(getGift(events), orders.getTotalAmount());
+        printGift(getGift(events), orders);
         printDiscountList(null);
         printTotalDiscount(null);
         printTotalAmount(null);
@@ -86,8 +86,8 @@ public class ChristmasService {
                 .orElse(null);
     }
 
-    private void printGift(GiftEvent event, int totalAmount) {
-        Map<Menu, Integer> giftMap = event.getGiftMap(totalAmount);
+    private void printGift(GiftEvent event, Orders orders) {
+        Map<Menu, Integer> giftMap = event.getGiftMap(orders.getTotalAmount(), orders.getDate());
         OutputView.printFreeMenu(giftMap);
     }
 

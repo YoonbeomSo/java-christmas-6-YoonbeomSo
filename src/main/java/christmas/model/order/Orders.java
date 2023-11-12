@@ -36,6 +36,10 @@ public class Orders {
                 .sum();
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
     private void validateDuplicate(List<OrderMenu> orderMenuList) {
         List<Menu> distinctList = orderMenuList.stream()
                 .map(om -> om.getMenu())
