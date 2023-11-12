@@ -9,15 +9,15 @@ public class OrderMenu {
     private final Menu menu;
     private final int count;
 
-    public OrderMenu(String stringMenu) {
-        String[] split = stringMenu.split("-");
+    public OrderMenu(String strMenu) {
+        String[] split = strMenu.split("-");
         validateSplit(split);
-        this.menu = convertMenu(split[0]);
-        this.count = convertCount(split[1]);
+        this.menu = convertMenu(split[0].trim());
+        this.count = convertCount(split[1].trim());
     }
 
     private void validateSplit(String[] split) {
-        if(split.length != 2) {
+        if (split.length != 2) {
             throw new IllegalArgumentException(ERROR_INVALID_MENU.getInputErrorMessage());
         }
     }
@@ -27,13 +27,14 @@ public class OrderMenu {
     }
 
     private int convertCount(String count) {
+        int result;
         try {
-            int result = Integer.parseInt(count);
-            validateCount(result);
-            return result;
+            result = Integer.parseInt(count);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(ERROR_INVALID_MENU.getInputErrorMessage());
         }
+        validateCount(result);
+        return result;
     }
 
     private void validateCount(int count) {

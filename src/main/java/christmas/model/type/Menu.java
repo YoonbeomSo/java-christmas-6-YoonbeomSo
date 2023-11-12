@@ -41,4 +41,8 @@ public enum Menu {
     public static boolean isBeverage(Menu menu) {
         return menu.menuType.equals(BEVERAGE);
     }
+
+    public String getName() {
+        return name;
+    }
 }

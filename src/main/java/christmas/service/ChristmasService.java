@@ -22,7 +22,7 @@ public class ChristmasService {
         LocalDate date = getDate();
         Orders orders = getOrders(date);
 
-        printMenus(null);
+        printMenus(orders);
         printOriginalAmount(null);
 
         printFreeMenus(null);
@@ -54,8 +54,8 @@ public class ChristmasService {
         }
     }
 
-    private void printMenus(Menu menu) {
-        OutputView.printMenu();
+    private void printMenus(Orders orders) {
+        OutputView.printMenu(orders);
     }
 
     private void printOriginalAmount(Menu menu) {

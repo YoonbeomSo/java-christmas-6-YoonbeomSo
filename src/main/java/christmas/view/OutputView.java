@@ -1,5 +1,10 @@
 package christmas.view;
 
+import christmas.common.MessageType;
+import christmas.model.Orders;
+
+import java.util.List;
+
 import static christmas.common.MessageType.*;
 
 public class OutputView {
@@ -7,7 +12,10 @@ public class OutputView {
         System.out.println(HELLO_MESSAGE.getMessage());
     }
 
-    public static void printMenu() {
+    public static void printMenu(Orders orders) {
+        List<String> orderList = orders.getOrderList();
+        System.out.println(MENU_TITLE.getMessage());
+        orderList.forEach(o -> System.out.println(o));
     }
 
     public static void printOriginalAmount() {

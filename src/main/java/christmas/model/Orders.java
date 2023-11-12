@@ -4,10 +4,12 @@ import christmas.model.type.Menu;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static christmas.common.ErrorMessageType.*;
+import static christmas.common.MessageType.*;
 
 public class Orders {
 
@@ -41,7 +43,7 @@ public class Orders {
         List<OrderMenu> beverageList = orderMenuList.stream()
                 .filter(om -> Menu.isBeverage(om.getMenu()))
                 .collect(Collectors.toList());
-        if(beverageList.size() == orderMenuList.size()) {
+        if (beverageList.size() == orderMenuList.size()) {
             throw new IllegalArgumentException(ERROR_NOT_ONLY_BEVERAGE.getInputErrorMessage());
         }
     }
@@ -53,6 +55,13 @@ public class Orders {
         if (countSum > MAX_ORDER_COUNT) {
             throw new IllegalArgumentException(ERROR_OVER_MAX_ORDER_SIZE.getInputErrorMessage());
         }
+    }
+
+    public List<String> getOrderList() {
+        return orderMenuList.stream()
+                .sorted(Comparator.comparingInt(OrderMenu::getCount).reversed())
+                .map(om -> getMenuMessage(om.getMenu().getName(), om.getCount()))
+                .collect(Collectors.toList());
     }
 
 }
