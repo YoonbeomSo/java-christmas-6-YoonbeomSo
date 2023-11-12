@@ -14,7 +14,7 @@ public enum MessageType {
     AMOUNT_FORMAT("%,d원"),
     GIFT_TITLE("<증정 메뉴>"),
     BENEFIT_TITLE("<혜택 내역>"),
-    BENEFIT_FORMAT("%s: -%,d원"),
+    BENEFIT_FORMAT("%s: %,d원"),
     TOTAL_BENEFIT_TITLE("<총혜택 금액>"),
     RESULT_AMOUNT_TITLE("<할인 후 예상 결제 금액>"),
     EMPTY("없음"),

@@ -106,10 +106,11 @@ public class ChristmasService {
 
     private Map<Event, Integer> getBenefitMap(List<Event> events, Orders orders) {
         return events.stream()
-                .sorted(Comparator.comparingInt((Event e) -> e.getBenefitAmount(orders)).reversed())
+                .sorted(Comparator.comparingInt((Event e) -> e.getBenefitAmount(orders)))
+                .filter(e -> e.getBenefitAmount(orders) != 0)
                 .collect(Collectors.toMap(
                         e -> e,
-                        e -> e.getBenefitAmount(orders),
+                        e -> (e.getBenefitAmount(orders) * -1),
                         (existing, replacement) -> existing,
                         LinkedHashMap::new));
     }
