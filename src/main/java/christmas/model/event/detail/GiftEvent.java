@@ -9,12 +9,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GiftEvent extends Event {
-    private static final String NAME = "증정 이벤트";
 
-    private final LocalDate startDate = LocalDate.of(2023, 12, 1);
-    private final LocalDate endDate = LocalDate.of(2023, 12, 31);
-    private final int STANDARD_AMOUNT = 120000;
-    private final Map<Menu, Integer> giftMap = Map.of(Menu.CHAMPAGNE, 1);
+    private static final String NAME = "증정 이벤트";
+    private static final LocalDate START_DATE = LocalDate.of(2023, 12, 1);
+    private static final LocalDate EMD_DATE = LocalDate.of(2023, 12, 31);
+    private static final int STANDARD_AMOUNT = 120000;
+    private static final Map<Menu, Integer> GIFT_MAP = Map.of(Menu.CHAMPAGNE, 1);
 
     @Override
     public boolean isValidEvent(Orders orders) {
@@ -26,7 +26,7 @@ public class GiftEvent extends Event {
         if(!isValidEvent(orders)){
             return 0;
         }
-        return giftMap.entrySet().stream()
+        return GIFT_MAP.entrySet().stream()
                 .mapToInt(g -> g.getKey().getPrice() * g.getValue())
                 .sum();
     }
@@ -38,13 +38,13 @@ public class GiftEvent extends Event {
 
     public Map<Menu, Integer> getGiftMap(int amount, LocalDate date) {
         if (periodCheck(date) && amountCheck(amount)) {
-            return giftMap;
+            return GIFT_MAP;
         }
         return new HashMap<>();
     }
 
     private boolean periodCheck(LocalDate date) {
-        if(date.isBefore(startDate) || date.isAfter(endDate)) {
+        if(date.isBefore(START_DATE) || date.isAfter(EMD_DATE)) {
             return false;
         }
         return true;

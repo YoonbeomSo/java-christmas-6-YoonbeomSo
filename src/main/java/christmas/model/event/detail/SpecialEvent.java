@@ -9,10 +9,10 @@ import java.util.List;
 public class SpecialEvent extends Event {
 
     private static final String NAME = "특별 할인";
-    private final int benefitAmount = 1000;
-    private final LocalDate startDate = LocalDate.of(2023, 12, 1);
-    private final LocalDate endDate = LocalDate.of(2023, 12, 31);
-    private final List<LocalDate> starDateList = List.of(
+    private static final int BENEFIT_AMOUNT = 1000;
+    private static final LocalDate START_DATE = LocalDate.of(2023, 12, 1);
+    private static final LocalDate END_DATE = LocalDate.of(2023, 12, 31);
+    private static final List<LocalDate> STAR_DATE_LIST = List.of(
             LocalDate.of(2023, 12, 3),
             LocalDate.of(2023, 12, 10),
             LocalDate.of(2023, 12, 17),
@@ -31,7 +31,7 @@ public class SpecialEvent extends Event {
         if(!isValidEvent(orders)) {
             return 0;
         }
-        return benefitAmount;
+        return BENEFIT_AMOUNT;
     }
 
     @Override
@@ -40,13 +40,13 @@ public class SpecialEvent extends Event {
     }
 
     private boolean periodCheck(LocalDate date) {
-        if (date.isBefore(startDate) || date.isAfter(endDate)) {
+        if (date.isBefore(START_DATE) || date.isAfter(END_DATE)) {
             return false;
         }
         return true;
     }
 
     private boolean starDateCheck(LocalDate date) {
-        return starDateList.contains(date);
+        return STAR_DATE_LIST.contains(date);
     }
 }

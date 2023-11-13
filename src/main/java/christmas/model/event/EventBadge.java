@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public enum EventBadge {
+
     STAR("별", 5000),
     TREE("트리", 10000),
     SANTA("산타", 20000),
@@ -29,7 +30,7 @@ public enum EventBadge {
         return name;
     }
 
-    public int getAmount() {
+    private int getAmount() {
         return amount;
     }
 }

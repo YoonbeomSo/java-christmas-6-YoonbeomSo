@@ -11,12 +11,12 @@ import static christmas.model.order.MenuType.*;
 import static java.time.DayOfWeek.*;
 
 public class WeekdayEvent extends Event {
-    private static final String NAME = "평일 할인";
-    private final int benefitAmount = 2023;
 
-    private final LocalDate startDate = LocalDate.of(2023, 12, 1);
-    private final LocalDate endDate = LocalDate.of(2023, 12, 31);
-    private final List<DayOfWeek> dayOfWeekList = List.of(SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY);
+    private static final String NAME = "평일 할인";
+    private static final int BENEFIT_AMOUNT = 2023;
+    private static final LocalDate START_DATE = LocalDate.of(2023, 12, 1);
+    private static final LocalDate END_DATE = LocalDate.of(2023, 12, 31);
+    private static final List<DayOfWeek> DAY_OF_WEEKS = List.of(SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY);
 
     @Override
     public boolean isValidEvent(Orders orders) {
@@ -30,7 +30,7 @@ public class WeekdayEvent extends Event {
         }
         return orders.getOrderMenuList().stream()
                 .filter(om -> om.getMenu().isDessert(DESSERT))
-                .mapToInt(om -> om.getCount() * benefitAmount)
+                .mapToInt(om -> om.getCount() * BENEFIT_AMOUNT)
                 .sum();
     }
 
@@ -40,7 +40,7 @@ public class WeekdayEvent extends Event {
     }
 
     private boolean periodCheck(LocalDate date) {
-        if(date.isBefore(startDate) || date.isAfter(endDate)) {
+        if(date.isBefore(START_DATE) || date.isAfter(END_DATE)) {
             return false;
         }
         return true;
@@ -48,6 +48,6 @@ public class WeekdayEvent extends Event {
 
     private boolean weekendCheck(LocalDate date) {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
-        return dayOfWeekList.contains(dayOfWeek);
+        return DAY_OF_WEEKS.contains(dayOfWeek);
     }
 }

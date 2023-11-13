@@ -12,12 +12,12 @@ import static java.time.DayOfWeek.FRIDAY;
 import static java.time.DayOfWeek.SATURDAY;
 
 public class WeekendEvent extends Event {
-    public static final String NAME = "주말 할인";
-    private final int benefitAmount = 2023;
 
-    private final LocalDate startDate = LocalDate.of(2023, 12, 1);
-    private final LocalDate endDate = LocalDate.of(2023, 12, 31);
-    private final List<DayOfWeek> dayOfWeekList = List.of(FRIDAY, SATURDAY);
+    private static final String NAME = "주말 할인";
+    private static final int benefitAmount = 2023;
+    private static final LocalDate startDate = LocalDate.of(2023, 12, 1);
+    private static final LocalDate endDate = LocalDate.of(2023, 12, 31);
+    private static final List<DayOfWeek> dayOfWeekList = List.of(FRIDAY, SATURDAY);
 
     @Override
     public boolean isValidEvent(Orders orders) {

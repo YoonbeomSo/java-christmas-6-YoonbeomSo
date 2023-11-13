@@ -1,6 +1,7 @@
 package christmas.model.order;
 
 public enum MenuType {
+
     APPETIZER(1),
     MAIN(2),
     DESSERT(3),
