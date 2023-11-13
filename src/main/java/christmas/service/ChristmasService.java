@@ -19,29 +19,25 @@ import java.util.stream.Collectors;
 public class ChristmasService {
 
     public void eventStart() {
-        Orders orders = reservation();
-
+        Orders orders = orderReservation();
         printBenefitForeword(orders.getDate());
         printMenus(orders.getOrderList());
-        printOriginalAmount(orders.getTotalAmount());
+        printOriginalAmount(orders.calculateTotalAmount());
 
         List<Event> events = getValidEventList(orders);
 
         printGift(events, orders);
         printBenefitList(events, orders);
         printTotalBenefit(events, orders);
-        printResultAmount(orders);
-        printEventBadge(orders);
+        printResultAmount(events, orders);
+        printEventBadge(events, orders);
     }
 
-    private Orders reservation() {
-        printHello();
-        LocalDate date = getDate();
-        return getOrders(date);
-    }
-
-    private static void printHello() {
+    private Orders orderReservation() {
         OutputView.printHello();
+        LocalDate date = getDate();
+        Orders orders = getOrders(date);
+        return orders;
     }
 
     private LocalDate getDate() {
@@ -60,6 +56,12 @@ public class ChristmasService {
             System.out.println(e.getMessage());
             return getOrders(date);
         }
+    }
+
+    private Orders buildOrders(List<String> menuList, LocalDate date) {
+        List<OrderMenu> orderMenuList = new ArrayList<>();
+        menuList.forEach(m -> orderMenuList.add(new OrderMenu(m)));
+        return new Orders(orderMenuList, date);
     }
 
     private void printBenefitForeword(LocalDate date) {
@@ -92,8 +94,7 @@ public class ChristmasService {
         GiftEvent giftEvent = getGift(events);
         Map<Menu, Integer> giftMap = new HashMap<>();
         if (giftEvent != null) {
-            giftMap = giftEvent.getGiftMap(orders.getTotalAmount(), orders.getDate());
-            orders.setGiftBenefitAmount(giftEvent.getBenefitAmount(orders));
+            giftMap = giftEvent.getGiftMap(orders.calculateTotalAmount(), orders.getDate());
         }
         OutputView.printFreeMenu(giftMap);
     }
@@ -115,23 +116,19 @@ public class ChristmasService {
     }
 
     private void printTotalBenefit(List<Event> events, Orders orders) {
-        orders.setBenefitAmount(events);
-        OutputView.printTotalBenefit(orders.getBenefitAmount());
+        int benefitAmount = orders.calculateBenefitAmount(events);
+        OutputView.printTotalBenefit(benefitAmount);
     }
 
-    private void printResultAmount(Orders orders) {
-        int resultAmount = orders.getResultAmount();
+    private void printResultAmount(List<Event> events, Orders orders) {
+        GiftEvent giftEvent = getGift(events);
+        int resultAmount = orders.calculateResultAmount(events, giftEvent);
         OutputView.printResultAmount(resultAmount);
     }
 
-    private void printEventBadge(Orders orders) {
-        EventBadge eventBadge = orders.getBadge();
+    private void printEventBadge(List<Event> events, Orders orders) {
+        int benefitAmount = orders.calculateBenefitAmount(events);
+        EventBadge eventBadge = EventBadge.findByAmount(benefitAmount);
         OutputView.printEventBadge(eventBadge);
-    }
-
-    private static Orders buildOrders(List<String> menuList, LocalDate date) {
-        List<OrderMenu> orderMenuList = new ArrayList<>();
-        menuList.forEach(m -> orderMenuList.add(new OrderMenu(m)));
-        return new Orders(orderMenuList, date);
     }
 }

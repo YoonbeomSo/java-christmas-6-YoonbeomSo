@@ -1,7 +1,7 @@
 package christmas.model.order;
 
 import christmas.model.event.Event;
-import christmas.model.event.EventBadge;
+import christmas.model.event.detail.GiftEvent;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import static christmas.common.ErrorMessageType.*;
 import static christmas.common.MessageType.*;
+import static christmas.model.order.MenuType.DESSERT;
 
 public class Orders {
 
@@ -16,16 +17,12 @@ public class Orders {
 
     private final List<OrderMenu> orderMenuList = new ArrayList<>();
     private final LocalDate date;
-    private final int totalAmount;
-    private int benefitAmount;
-    private int giftBenefitAmount;
 
     public Orders(List<OrderMenu> orderMenuList, LocalDate date) {
         validateDuplicate(orderMenuList);
         validateUserCaution(orderMenuList);
         this.orderMenuList.addAll(orderMenuList);
         this.date = date;
-        this.totalAmount = calculatorTotalAmount(orderMenuList);
     }
 
     public List<String> getOrderList() {
@@ -35,38 +32,38 @@ public class Orders {
                 .collect(Collectors.toList());
     }
 
-    public int getTotalAmount() {
-        return this.totalAmount;
+    public int calculateTotalAmount() {
+        return orderMenuList.stream()
+                .mapToInt(om -> om.getMenu().getPrice() * om.getCount())
+                .sum();
     }
+
+    public int calculateBenefitAmount(List<Event> events) {
+        return events.stream()
+                .mapToInt(e -> e.getBenefitAmount(this))
+                .sum();
+    }
+
+    public int calculateEventBenefitAmount(int amount, MenuType menuType) {
+        return orderMenuList.stream()
+                .filter(om -> om.getMenu().isEqualsMenuType(menuType))
+                .mapToInt(om -> om.getCount() * amount)
+                .sum();
+    }
+
+    public int calculateResultAmount(List<Event> events, GiftEvent giftEvent) {
+        int totalAmount = calculateTotalAmount();
+        int benefitAmount = calculateBenefitAmount(events);
+        if (giftEvent != null) {
+            Integer giftEventBenefitAmount = giftEvent.getBenefitAmount(this);
+            return totalAmount - (benefitAmount - giftEventBenefitAmount);
+        }
+        return totalAmount - benefitAmount;
+    }
+
 
     public LocalDate getDate() {
         return date;
-    }
-
-    public List<OrderMenu> getOrderMenuList() {
-        return orderMenuList;
-    }
-
-    public int getBenefitAmount() {
-        return benefitAmount;
-    }
-
-    public int getResultAmount() {
-        return totalAmount - (benefitAmount - giftBenefitAmount);
-    }
-
-    public EventBadge getBadge() {
-        return EventBadge.findByAmount(benefitAmount);
-    }
-
-    public void setGiftBenefitAmount(Integer amount) {
-        this.giftBenefitAmount = amount;
-    }
-
-    public void setBenefitAmount(List<Event> events) {
-        this.benefitAmount = events.stream()
-                .mapToInt(e -> e.getBenefitAmount(this))
-                .sum();
     }
 
     private void validateDuplicate(List<OrderMenu> orderMenuList) {
@@ -101,11 +98,4 @@ public class Orders {
             throw new IllegalArgumentException(ERROR_OVER_MAX_ORDER_SIZE.getInputErrorMessage());
         }
     }
-
-    private int calculatorTotalAmount(List<OrderMenu> orderMenuList) {
-        return orderMenuList.stream()
-                .mapToInt(om -> om.getMenu().getPrice() * om.getCount())
-                .sum();
-    }
-
 }

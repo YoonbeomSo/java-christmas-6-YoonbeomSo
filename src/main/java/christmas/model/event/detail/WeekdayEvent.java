@@ -1,6 +1,7 @@
 package christmas.model.event.detail;
 
 import christmas.model.event.Event;
+import christmas.model.order.MenuType;
 import christmas.model.order.Orders;
 
 import java.time.DayOfWeek;
@@ -28,10 +29,7 @@ public class WeekdayEvent extends Event {
         if (!isValidEvent(orders)) {
             return 0;
         }
-        return orders.getOrderMenuList().stream()
-                .filter(om -> om.getMenu().isDessert(DESSERT))
-                .mapToInt(om -> om.getCount() * BENEFIT_AMOUNT)
-                .sum();
+        return orders.calculateEventBenefitAmount(BENEFIT_AMOUNT, DESSERT);
     }
 
     @Override
@@ -40,7 +38,7 @@ public class WeekdayEvent extends Event {
     }
 
     private boolean periodCheck(LocalDate date) {
-        if(date.isBefore(START_DATE) || date.isAfter(END_DATE)) {
+        if (date.isBefore(START_DATE) || date.isAfter(END_DATE)) {
             return false;
         }
         return true;

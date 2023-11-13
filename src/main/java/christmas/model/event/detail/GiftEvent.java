@@ -18,12 +18,12 @@ public class GiftEvent extends Event {
 
     @Override
     public boolean isValidEvent(Orders orders) {
-        return periodCheck(orders.getDate()) && amountCheck(orders.getTotalAmount());
+        return periodCheck(orders.getDate()) && amountCheck(orders.calculateTotalAmount());
     }
 
     @Override
     public Integer getBenefitAmount(Orders orders) {
-        if(!isValidEvent(orders)){
+        if (!isValidEvent(orders)) {
             return 0;
         }
         return GIFT_MAP.entrySet().stream()
@@ -44,7 +44,7 @@ public class GiftEvent extends Event {
     }
 
     private boolean periodCheck(LocalDate date) {
-        if(date.isBefore(START_DATE) || date.isAfter(EMD_DATE)) {
+        if (date.isBefore(START_DATE) || date.isAfter(EMD_DATE)) {
             return false;
         }
         return true;
