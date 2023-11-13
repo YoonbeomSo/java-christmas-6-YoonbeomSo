@@ -1,6 +1,5 @@
 package christmas.model.event.detail;
 
-import christmas.model.order.Menu;
 import christmas.model.order.OrderMenu;
 import christmas.model.order.Orders;
 import org.junit.jupiter.api.BeforeEach;
