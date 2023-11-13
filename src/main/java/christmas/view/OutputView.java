@@ -16,14 +16,13 @@ public class OutputView {
         System.out.println(HELLO_MESSAGE.getMessage());
     }
 
-    public static void printBefitForeword(LocalDate date) {
+    public static void printBenefitForeword(LocalDate date) {
         System.out.println(getBenefitForewordMessage(date));
         System.out.println();
     }
 
-    public static void printMenu(Orders orders) {
+    public static void printMenu(List<String> orderList) {
         System.out.println(MENU_TITLE.getMessage());
-        List<String> orderList = orders.getOrderList();
         orderList.forEach(o -> System.out.println(o));
         System.out.println();
     }

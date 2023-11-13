@@ -2,6 +2,7 @@ package christmas.service;
 
 import christmas.model.event.Event;
 import christmas.model.event.EventBadge;
+import christmas.model.event.EventDate;
 import christmas.model.order.OrderMenu;
 import christmas.model.order.Orders;
 import christmas.model.event.ActiveEvent;
@@ -10,23 +11,19 @@ import christmas.model.order.Menu;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static christmas.common.ErrorMessageType.ERROR_INVALID_DATE;
-import static christmas.model.event.EventDate.EVENT_MONTH;
-import static christmas.model.event.EventDate.EVENT_YEAR;
 
 public class ChristmasService {
 
     public void eventStart() {
         Orders orders = reservation();
 
-        printBefitForeword(orders.getDate());
-        printMenus(orders);
-        printOriginalAmount(orders);
+        printBenefitForeword(orders.getDate());
+        printMenus(orders.getOrderList());
+        printOriginalAmount(orders.getTotalAmount());
 
         List<Event> events = getValidEventList(orders);
 
@@ -49,7 +46,7 @@ public class ChristmasService {
 
     private LocalDate getDate() {
         try {
-            return getLocalDate(InputView.readDate());
+            return EventDate.findLocalDateByDay(InputView.readDate());
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return getDate();
@@ -65,16 +62,15 @@ public class ChristmasService {
         }
     }
 
-    private void printBefitForeword(LocalDate date) {
-        OutputView.printBefitForeword(date);
+    private void printBenefitForeword(LocalDate date) {
+        OutputView.printBenefitForeword(date);
     }
 
-    private void printMenus(Orders orders) {
-        OutputView.printMenu(orders);
+    private void printMenus(List<String> orderList) {
+        OutputView.printMenu(orderList);
     }
 
-    private void printOriginalAmount(Orders orders) {
-        int totalAmount = orders.getTotalAmount();
+    private void printOriginalAmount(int totalAmount) {
         OutputView.printOriginalAmount(totalAmount);
     }
 
@@ -131,14 +127,6 @@ public class ChristmasService {
     private void printEventBadge(Orders orders) {
         EventBadge eventBadge = orders.getBadge();
         OutputView.printEventBadge(eventBadge);
-    }
-
-    private static LocalDate getLocalDate(int date) {
-        try {
-            return LocalDate.of(EVENT_YEAR.getValue(), EVENT_MONTH.getValue(), date);
-        } catch (DateTimeException e) {
-            throw new IllegalArgumentException(ERROR_INVALID_DATE.getInputErrorMessage());
-        }
     }
 
     private static Orders buildOrders(List<String> menuList, LocalDate date) {
