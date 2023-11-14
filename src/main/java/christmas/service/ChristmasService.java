@@ -1,5 +1,6 @@
 package christmas.service;
 
+import camp.nextstep.edu.missionutils.Console;
 import christmas.model.event.Event;
 import christmas.model.event.type.EventBadge;
 import christmas.model.event.type.EventDate;
@@ -31,6 +32,8 @@ public class ChristmasService {
         printTotalBenefit(events, orders);
         printResultAmount(events, orders);
         printEventBadge(events, orders);
+
+        close();
     }
 
     private Orders orderReservation() {
@@ -130,5 +133,9 @@ public class ChristmasService {
         int benefitAmount = orders.calculateBenefitAmount(events);
         EventBadge eventBadge = EventBadge.findByAmount(benefitAmount);
         OutputView.printEventBadge(eventBadge);
+    }
+
+    private void close() {
+        Console.close();
     }
 }
