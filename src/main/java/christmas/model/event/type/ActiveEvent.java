@@ -1,5 +1,6 @@
-package christmas.model.event;
+package christmas.model.event.type;
 
+import christmas.model.event.Event;
 import christmas.model.event.detail.*;
 
 import java.util.List;

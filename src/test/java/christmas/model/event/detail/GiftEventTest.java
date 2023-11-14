@@ -1,6 +1,6 @@
 package christmas.model.event.detail;
 
-import christmas.model.order.Menu;
+import christmas.model.order.type.Menu;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

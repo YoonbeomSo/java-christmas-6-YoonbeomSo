@@ -1,14 +1,13 @@
 package christmas.model.event.detail;
 
 import christmas.model.event.Event;
-import christmas.model.order.MenuType;
 import christmas.model.order.Orders;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
-import static christmas.model.order.MenuType.*;
+import static christmas.model.order.type.MenuType.*;
 import static java.time.DayOfWeek.*;
 
 public class WeekdayEvent extends Event {

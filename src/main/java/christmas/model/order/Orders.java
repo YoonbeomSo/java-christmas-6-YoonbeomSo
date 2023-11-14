@@ -2,6 +2,8 @@ package christmas.model.order;
 
 import christmas.model.event.Event;
 import christmas.model.event.detail.GiftEvent;
+import christmas.model.order.type.Menu;
+import christmas.model.order.type.MenuType;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -9,7 +11,6 @@ import java.util.stream.Collectors;
 
 import static christmas.common.ErrorMessageType.*;
 import static christmas.common.MessageType.*;
-import static christmas.model.order.MenuType.DESSERT;
 
 public class Orders {
 

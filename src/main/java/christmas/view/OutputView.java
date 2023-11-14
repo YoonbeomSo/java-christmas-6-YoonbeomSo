@@ -1,9 +1,8 @@
 package christmas.view;
 
 import christmas.model.event.Event;
-import christmas.model.event.EventBadge;
-import christmas.model.order.Orders;
-import christmas.model.order.Menu;
+import christmas.model.event.type.EventBadge;
+import christmas.model.order.type.Menu;
 
 import java.time.LocalDate;
 import java.util.List;

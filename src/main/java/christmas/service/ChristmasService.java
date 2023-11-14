@@ -1,13 +1,13 @@
 package christmas.service;
 
 import christmas.model.event.Event;
-import christmas.model.event.EventBadge;
-import christmas.model.event.EventDate;
+import christmas.model.event.type.EventBadge;
+import christmas.model.event.type.EventDate;
 import christmas.model.order.OrderMenu;
 import christmas.model.order.Orders;
-import christmas.model.event.ActiveEvent;
+import christmas.model.event.type.ActiveEvent;
 import christmas.model.event.detail.GiftEvent;
-import christmas.model.order.Menu;
+import christmas.model.order.type.Menu;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 

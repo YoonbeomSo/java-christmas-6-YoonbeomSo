@@ -1,9 +1,9 @@
-package christmas.model.order;
+package christmas.model.order.type;
 
 import java.util.List;
 
 import static christmas.common.ErrorMessageType.*;
-import static christmas.model.order.MenuType.*;
+import static christmas.model.order.type.MenuType.*;
 
 public enum Menu {
 

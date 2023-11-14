@@ -1,4 +1,4 @@
-package christmas.model.event;
+package christmas.model.event.type;
 
 import java.util.Comparator;
 import java.util.List;

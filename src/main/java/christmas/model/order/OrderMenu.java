@@ -1,5 +1,7 @@
 package christmas.model.order;
 
+import christmas.model.order.type.Menu;
+
 import static christmas.common.ErrorMessageType.*;
 
 public class OrderMenu {

@@ -4,6 +4,8 @@ import christmas.model.event.Event;
 import christmas.model.event.detail.GiftEvent;
 import christmas.model.event.detail.WeekdayEvent;
 import christmas.model.event.detail.WeekendEvent;
+import christmas.model.order.type.Menu;
+import christmas.model.order.type.MenuType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

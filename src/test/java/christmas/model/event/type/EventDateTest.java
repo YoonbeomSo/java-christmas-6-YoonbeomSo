@@ -1,5 +1,6 @@
-package christmas.model.event;
+package christmas.model.event.type;
 
+import christmas.model.event.type.EventDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
