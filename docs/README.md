@@ -34,3 +34,5 @@
 ### 9. 12월 이벤트 배지 출력
 - 이벤트 배지 조회
 - 없음 처리
+
+> *검증 실패 -> IllegalArgumentException 발생 -> Error 메시지 출력 후 재입력
